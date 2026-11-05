@@ -118,11 +118,11 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     accept (IDENT);
-    while(getCurrenTtoken() == "["){
+    while(getCurrenTtoken() == LBRACKET){
       nexttoken();
-      accept("]");
+      accept(RBRACKET);
     }
-      if(getCurrentToken == "="){
+      if(getCurrentToken == BECOMES){
         nexttoken();
         expr3();
       
@@ -160,8 +160,25 @@ public final class Parser {
   {
     TJ.output.printSymbol(NTmethodDecl);
     TJ.output.incTreeDepth();
-
-    /* ???????? */
+    
+    if(getCurrentToken() == VOID) {
+    	nextToekn();
+    }
+    else if(getCurrentToken() == INT) {
+    	nextToken();
+    	if(getCurrentToken() == LBRACKET) {
+    		nextToken();
+    		accept(RBRACKET);
+    	}
+    }
+    accept(IDENT);
+    accept(LPAREN);
+    if(getCurrentToken() != RPAREN) {
+    	parameterDeclList();
+    }
+    accept(RPAREN);
+    compoundStmt();
+    /* trying to accept a function title which mgiht be void or int will need to get the parameter */
 
     TJ.output.decTreeDepth();
   }
@@ -206,6 +223,10 @@ public final class Parser {
     TJ.output.printSymbol(NTcompoundStmt);
     TJ.output.incTreeDepth();
 
+    accept("{");
+    statement();
+    accept("}");
+    
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -243,6 +264,18 @@ public final class Parser {
     TJ.output.printSymbol(NTassignmentOrInvoc);
     TJ.output.incTreeDepth();
 
+    accept(IDENT);
+    if(getCurrentToken == "[") {
+    	accept("[");
+    	expr3();
+    	accept("]");
+    	accept(BECOMES);
+    	expr3();
+    }
+    else {
+    	argumentList();
+    }
+    
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -254,6 +287,8 @@ public final class Parser {
      TJ.output.printSymbol(NTargumentList);
      TJ.output.incTreeDepth();
 
+     accept("(");
+     
      /* ???????? */
 
      TJ.output.decTreeDepth();
