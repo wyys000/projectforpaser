@@ -118,11 +118,11 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     accept (IDENT);
-    while(getCurrenTtoken() == LBRACKET){
-      nexttoken();
+    while(getCurrentToken() == LBRACKET){
+      nextToken();
       accept(RBRACKET);
     }
-      if(getCurrentToken == BECOMES){
+      if(getCurrentToken() == BECOMES){
         nexttoken();
         expr3();
       
@@ -162,7 +162,7 @@ public final class Parser {
     TJ.output.incTreeDepth();
     
     if(getCurrentToken() == VOID) {
-    	nextToekn();
+    	nextToken();
     }
     else if(getCurrentToken() == INT) {
     	nextToken();
@@ -223,9 +223,9 @@ public final class Parser {
     TJ.output.printSymbol(NTcompoundStmt);
     TJ.output.incTreeDepth();
 
-    accept("{");
+    accept(LBRACE);
     statement();
-    accept("}");
+    accept(RBRACE);
     
     /* ???????? */
 
@@ -265,10 +265,10 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     accept(IDENT);
-    if(getCurrentToken == "[") {
-    	accept("[");
+    if(getCurrentToken == LBRACKET) {
+    	nextToken();
     	expr3();
-    	accept("]");
+    	accept(RBRACKET);
     	accept(BECOMES);
     	expr3();
     }
