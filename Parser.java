@@ -117,7 +117,18 @@ public final class Parser {
     TJ.output.printSymbol(NTsingleVarDecl);
     TJ.output.incTreeDepth();
 
-    /* ???????? */
+    accept (IDENT);
+    while(getCurrenTtoken() == "["){
+      nexttoken();
+      accept("]");
+    }
+      if(getCurrentToken == "="){
+        nexttoken();
+        expr3();
+      
+      }
+      
+    /* first check for [ and get the token and end wiht ] if didnt find [] get the next token equal to expr3 */
 
     TJ.output.decTreeDepth();
   }
