@@ -168,7 +168,10 @@ public final class Parser {
     	nextToken();
     	if(getCurrentToken() == LBRACKET) {
     		nextToken();
+      while(getCurrentToken != RBRACKET){
+        nextToken();
     		accept(RBRACKET);
+      }
     	}
     }
     accept(IDENT);
@@ -265,10 +268,12 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     accept(IDENT);
-    if(getCurrentToken == LBRACKET) {
-    	nextToken();
-    	expr3();
-    	accept(RBRACKET);
+    if(getCurrentToken == LBRACKET || getCurrentToken == BECOMES) {
+      while(getCurrrentToken == LBRACKET){
+        nextToken();
+      	expr3();
+      	accept(RBRACKET);
+      }
     	accept(BECOMES);
     	expr3();
     }
