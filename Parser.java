@@ -227,7 +227,9 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     accept(LBRACE);
-    statement();
+    while(getCurrentToken() != RBRACE){
+      statement();
+    }
     accept(RBRACE);
     
     /* ???????? */
@@ -387,6 +389,8 @@ public final class Parser {
     TJ.output.printSymbol(NTprintArgument);
     TJ.output.incTreeDepth();
 
+    accept(CHARSTRING);
+    expr3();
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -398,6 +402,11 @@ public final class Parser {
     TJ.output.printSymbol(NTexpr7);
     TJ.output.incTreeDepth();
 
+    expr6();
+    while(getCurrentToken() != "|"){
+      accept(|);
+      expr6();
+    }
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -409,6 +418,11 @@ public final class Parser {
     TJ.output.printSymbol(NTexpr6);
     TJ.output.incTreeDepth();
 
+    expr5();
+    while(getCurrentToken() != &){
+      accept(&);
+      expr5();
+    }
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -420,6 +434,7 @@ public final class Parser {
     TJ.output.printSymbol(NTexpr5);
     TJ.output.incTreeDepth();
 
+    expr4();
     /* ???????? */
 
     TJ.output.decTreeDepth();
