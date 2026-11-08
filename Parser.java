@@ -292,14 +292,14 @@ public final class Parser {
      TJ.output.printSymbol(NTargumentList);
      TJ.output.incTreeDepth();
 
-     accept(parentheses);
+     accept(LPAREN);
      expr3();
      while(getCurrentToken == comma){
        expr3();
      }
-     accept(RPARENTHESES);
+     accept(RPAREN);
      
-     /* ???????? */
+     /*  */
 
      TJ.output.decTreeDepth();
   }
@@ -331,6 +331,11 @@ public final class Parser {
     TJ.output.printSymbol(NTwhileStmt);
     TJ.output.incTreeDepth();
 
+    accept(WHILE);
+    accept(LBRAKET);
+    expr7();
+    accept(RBRAKET);
+    statement();
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -348,6 +353,22 @@ public final class Parser {
     accept(DOT);
 
     switch (getCurrentToken()) {
+        if(getCurrentToken == print){
+          accept(LPAREN);
+          PRINTARGUMENT();
+          accept(RPAREN);
+        }
+        else if(getCurrentToken == println){
+          accept(LPAREN);
+          if(getCurrentToken != RPAREN){
+            PrintArgument();
+          }
+          accept(RPAREN);
+        }
+        else{
+          throw new SourceFileErrorException("print() or println() expected, not "
+                              + getCurrentToken().symbolRepresentationForOutputFile);
+        }
 
       /* ????????
 
