@@ -292,7 +292,12 @@ public final class Parser {
      TJ.output.printSymbol(NTargumentList);
      TJ.output.incTreeDepth();
 
-     accept("(");
+     accept(parentheses);
+     expr3();
+     while(getCurrentToken == comma){
+       expr3();
+     }
+     accept(RPARENTHESES);
      
      /* ???????? */
 
