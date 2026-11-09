@@ -357,13 +357,13 @@ public final class Parser {
     accept(DOT);
 
             if(getCurrentToken() == print){
-              accept(PRINT);
+             nextToken();
           accept(LPAREN);
           printArgument();
           accept(RPAREN);
         }
         else if(getCurrentToken() == println){
-          accept(PRINTLN);
+          nextToken();
           accept(LPAREN);
           if(getCurrentToken != RPAREN){
             printArgument();
@@ -375,7 +375,7 @@ public final class Parser {
                               + getCurrentToken().symbolRepresentationForOutputFile);
         }
     accept(SEMICOLON);
-    switch (getCurrentToken()) {
+    
 
 
       /* ????????
@@ -384,7 +384,7 @@ public final class Parser {
                               + getCurrentToken().symbolRepresentationForOutputFile);
       */
 
-    }
+    
 
     TJ.output.decTreeDepth();
   }
@@ -417,7 +417,7 @@ public final class Parser {
       nextToken();
       expr6();
     }
-    /* ???????? */
+    /*  */
 
     TJ.output.decTreeDepth();
   }
@@ -445,7 +445,7 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr4();
-    while(getCurrentToken() == EQUAL || getCurrentToken() == NOTEQUAL){
+    while(getCurrentToken() == EQ || getCurrentToken() == NE){
       // if(getCurrentToken() == ==){
       //   accept(==);
       //   else{
@@ -466,7 +466,7 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr3();
-    if(getCurrentToken() == GREATERTHEN || getCurrentToken() == GREATEREQUAL ||getCurrentToken() == LESSTHEN ||getCurrentToken() == LESSEQUAL){
+    if(getCurrentToken() == GT || getCurrentToken() == LT ||getCurrentToken() == GE ||getCurrentToken() == LE){
       // if(getCurrentToken() == >){
       //   accept(>);
       // }
@@ -479,6 +479,7 @@ public final class Parser {
       // if(getCurrentToken() == <=){
       //   accept(<=);
       // }
+      nextToken();
       expr3();
     }
     /* ???????? */
@@ -536,6 +537,58 @@ public final class Parser {
 
     switch (getCurrentToken()) {
 
+      case LPAREN:
+        nextToken();
+        expr7();
+        accept(RPAREN);
+        break;
+
+      case PLUS: case MINUS: case NOT:
+        nextToken();
+        expr1();
+        break;
+
+      case UNSIGNEDINT:
+        nextToken();
+        break;
+
+      case NULL:
+        nextToken();
+        break;
+
+      case NEW:
+        nextToken();
+        accept(INT);
+        accept(LBRACKET);
+        expr3();
+        accept(RBRACKET);
+        while(getCurrentToken == LBRACKET){
+          nextToken();
+          accept(RBRACKET);
+        }
+        break;
+
+      case IDENT:
+        nextToken();
+        if(getCurrentToken() == DOT){
+          accept(DOT);
+          accept(nextInt);
+          accept(LPAREN);
+          accept(RPAREN);
+        }
+        else{
+          if(getCurrentToken() == argumentList){
+            argumentList();
+          }
+          while(getCurrentToken() == LBRACKET){
+            accept(LBRACKET);
+            expr3();
+            accept(RBRACKET);
+          }
+        }
+        break;
+        default: throw new SourceFileErrorException("Malformed expression");
+        
       /* ????????
 
       default: throw new SourceFileErrorException("Malformed expression");
