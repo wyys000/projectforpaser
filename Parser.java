@@ -442,6 +442,14 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr4();
+    while(getCurrentToken() == == || getCurrentToken() == !=){
+      if(getCurrentToken() == ==){
+        accept(==);
+        else{
+        accept(!=);
+          }
+      expr4();
+    }
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -453,6 +461,22 @@ public final class Parser {
     TJ.output.printSymbol(NTexpr4);
     TJ.output.incTreeDepth();
 
+    expr3();
+    if(getCurrentToken() == > || getCurrentToken() == >= ||getCurrentToken() == < ||getCurrentToken() == <=){
+      if(getCurrentToken() == >){
+        accept(>);
+      }
+      if(getCurrentToken() == >=){
+        accept(>=);
+      }
+      if(getCurrentToken() == <){
+        accept(<);
+      }
+      if(getCurrentToken() == <=){
+        accept(<=);
+      }
+      expr3();
+    }
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -464,6 +488,16 @@ public final class Parser {
     TJ.output.printSymbol(NTexpr3);
     TJ.output.incTreeDepth();
 
+    expr2();
+    while(getCurrentToken() == + || getCurrentToken() == -){
+      if(getCurrentToken() == +){
+        accept(+);
+      }
+      else{
+        accept(-);
+      }
+      expr2();
+    }
     /* ???????? */
 
     TJ.output.decTreeDepth();
