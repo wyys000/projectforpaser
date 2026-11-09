@@ -269,7 +269,7 @@ public final class Parser {
 
     accept(IDENT);
     if(getCurrentToken() == LBRACKET || getCurrentToken() == BECOMES) {
-      while(getCurrrentToken() == LBRACKET){
+      while(getCurrentToken() == LBRACKET){
         nextToken();
       	expr3();
       	accept(RBRACKET);
@@ -356,16 +356,16 @@ public final class Parser {
     accept(OUT);
     accept(DOT);
 
-            if(getCurrentToken() == print){
+            if(getCurrentToken() == Print){
              nextToken();
           accept(LPAREN);
           printArgument();
           accept(RPAREN);
         }
-        else if(getCurrentToken() == println){
+        else if(getCurrentToken() == Println){
           nextToken();
           accept(LPAREN);
-          if(getCurrentToken != RPAREN){
+          if(getCurrentToken() != RPAREN){
             printArgument();
           }
           accept(RPAREN);
@@ -562,7 +562,7 @@ public final class Parser {
         accept(LBRACKET);
         expr3();
         accept(RBRACKET);
-        while(getCurrentToken == LBRACKET){
+        while(getCurrentToken() == LBRACKET){
           nextToken();
           accept(RBRACKET);
         }
@@ -572,12 +572,12 @@ public final class Parser {
         nextToken();
         if(getCurrentToken() == DOT){
           accept(DOT);
-          accept(nextInt);
+          accept(NEXTINT);
           accept(LPAREN);
           accept(RPAREN);
         }
         else{
-          if(getCurrentToken() == argumentList){
+          if(getCurrentToken() == LPAREN){
             argumentList();
           }
           while(getCurrentToken() == LBRACKET){
