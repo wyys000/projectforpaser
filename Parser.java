@@ -293,11 +293,13 @@ public final class Parser {
      TJ.output.incTreeDepth();
 
      accept(LPAREN);
+    if(getCurrentToken() != RPAREN){
      expr3();
      while(getCurrentToken() == COMMA){
        nextToken();
        expr3();
      }
+    }
      accept(RPAREN);
      
      /*  */
@@ -429,7 +431,7 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr5();
-    while(getCurrentToken() != AND){
+    while(getCurrentToken() == AND){
       nextToken();
       expr5();
     }
