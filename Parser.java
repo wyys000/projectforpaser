@@ -413,7 +413,7 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr6();
-    while(getCurrentToken() != OR){
+    while(getCurrentToken() == OR){
       nextToken();
       expr6();
     }
