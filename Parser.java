@@ -160,7 +160,7 @@ public final class Parser {
   {
     TJ.output.printSymbol(NTmethodDecl);
     TJ.output.incTreeDepth();
-    
+    accept(STATIC);
     if(getCurrentToken() == VOID) {
     	nextToken();
     }
@@ -269,7 +269,7 @@ public final class Parser {
 
     accept(IDENT);
     if(getCurrentToken() == LBRACKET || getCurrentToken() == BECOMES) {
-      while(getCurrrentToken == LBRACKET){
+      while(getCurrrentToken() == LBRACKET){
         nextToken();
       	expr3();
       	accept(RBRACKET);
@@ -280,7 +280,7 @@ public final class Parser {
     else {
     	argumentList();
     }
-    
+    accept(SEMICOLON);
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -337,9 +337,9 @@ public final class Parser {
     expr7();
     accept(RPAREN);
     statement();
-    if(getCurrentToken == else){
-      statement();
-    }
+   // if(getCurrentToken == else){
+     // statement();
+    //}
     /* ???????? */
 
     TJ.output.decTreeDepth();
@@ -357,11 +357,13 @@ public final class Parser {
     accept(DOT);
 
             if(getCurrentToken() == print){
+              accept(PRINT);
           accept(LPAREN);
           printArgument();
           accept(RPAREN);
         }
         else if(getCurrentToken() == println){
+          accept(PRINTLN);
           accept(LPAREN);
           if(getCurrentToken != RPAREN){
             printArgument();
@@ -372,6 +374,7 @@ public final class Parser {
           throw new SourceFileErrorException("print() or println() expected, not "
                               + getCurrentToken().symbolRepresentationForOutputFile);
         }
+    accept(SEMICOLON);
     switch (getCurrentToken()) {
 
 
@@ -392,7 +395,7 @@ public final class Parser {
     TJ.output.printSymbol(NTprintArgument);
     TJ.output.incTreeDepth();
 
-    if(getCurrentToken == CHARSTRING){
+    if(getCurrentToken() == CHARSTRING){
       accept(CHARSTRING);
     }
     else{
@@ -410,8 +413,8 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr6();
-    while(getCurrentToken() != "|"){
-      accept(|);
+    while(getCurrentToken() != OR){
+      nextToken();
       expr6();
     }
     /* ???????? */
@@ -426,8 +429,8 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr5();
-    while(getCurrentToken() != &){
-      accept(&);
+    while(getCurrentToken() != AND){
+      nextToken();
       expr5();
     }
     /* ???????? */
@@ -442,12 +445,13 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr4();
-    while(getCurrentToken() == == || getCurrentToken() == !=){
-      if(getCurrentToken() == ==){
-        accept(==);
-        else{
-        accept(!=);
-          }
+    while(getCurrentToken() == EQUAL || getCurrentToken() == NOTEQUAL){
+      // if(getCurrentToken() == ==){
+      //   accept(==);
+      //   else{
+      //   accept(!=);
+      //     }
+      nextToken();
       expr4();
     }
     /* ???????? */
@@ -462,19 +466,19 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr3();
-    if(getCurrentToken() == > || getCurrentToken() == >= ||getCurrentToken() == < ||getCurrentToken() == <=){
-      if(getCurrentToken() == >){
-        accept(>);
-      }
-      if(getCurrentToken() == >=){
-        accept(>=);
-      }
-      if(getCurrentToken() == <){
-        accept(<);
-      }
-      if(getCurrentToken() == <=){
-        accept(<=);
-      }
+    if(getCurrentToken() == GREATERTHEN || getCurrentToken() == GREATEREQUAL ||getCurrentToken() == LESSTHEN ||getCurrentToken() == LESSEQUAL){
+      // if(getCurrentToken() == >){
+      //   accept(>);
+      // }
+      // if(getCurrentToken() == >=){
+      //   accept(>=);
+      // }
+      // if(getCurrentToken() == <){
+      //   accept(<);
+      // }
+      // if(getCurrentToken() == <=){
+      //   accept(<=);
+      // }
       expr3();
     }
     /* ???????? */
@@ -489,13 +493,14 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     expr2();
-    while(getCurrentToken() == + || getCurrentToken() == -){
-      if(getCurrentToken() == +){
-        accept(+);
-      }
-      else{
-        accept(-);
-      }
+    while(getCurrentToken() == PLUS || getCurrentToken() == MINUS){
+      // if(getCurrentToken() == +){
+      //   accept(+);
+      // }
+      // else{
+      //   accept(-);
+      // }
+      nextToken();
       expr2();
     }
     /* ???????? */
