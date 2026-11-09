@@ -123,7 +123,7 @@ public final class Parser {
       accept(RBRACKET);
     }
       if(getCurrentToken() == BECOMES){
-        nexttoken();
+        nextToken();
         expr3();
       
       }
@@ -168,9 +168,9 @@ public final class Parser {
     	nextToken();
     	if(getCurrentToken() == LBRACKET) {
     		nextToken();
-      while(getCurrentToken != RBRACKET){
-        nextToken();
-    		accept(RBRACKET);
+        while(getCurrentToken() != RBRACKET){
+          nextToken();
+    		  accept(RBRACKET);
       }
     	}
     }
@@ -270,7 +270,7 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     accept(IDENT);
-    if(getCurrentToken == LBRACKET || getCurrentToken == BECOMES) {
+    if(getCurrentToken() == LBRACKET || getCurrentToken() == BECOMES) {
       while(getCurrrentToken == LBRACKET){
         nextToken();
       	expr3();
@@ -296,7 +296,8 @@ public final class Parser {
 
      accept(LPAREN);
      expr3();
-     while(getCurrentToken == comma){
+     while(getCurrentToken() == COMMA){
+       nextToken();
        expr3();
      }
      accept(RPAREN);
@@ -334,10 +335,13 @@ public final class Parser {
     TJ.output.incTreeDepth();
 
     accept(WHILE);
-    accept(LBRAKET);
+    accept(LPAREN);
     expr7();
-    accept(RBRAKET);
+    accept(RPAREN);
     statement();
+    if(getCurrentToken == else){
+      statement();
+    }
     /* ???????? */
 
     TJ.output.decTreeDepth();
