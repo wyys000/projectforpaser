@@ -356,13 +356,13 @@ public final class Parser {
     accept(OUT);
     accept(DOT);
 
-            if(getCurrentToken() == Print){
+            if(getCurrentToken() == PRINT){
              nextToken();
           accept(LPAREN);
           printArgument();
           accept(RPAREN);
         }
-        else if(getCurrentToken() == Println){
+        else if(getCurrentToken() == PRINTLN){
           nextToken();
           accept(LPAREN);
           if(getCurrentToken() != RPAREN){
