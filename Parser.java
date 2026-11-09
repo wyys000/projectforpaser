@@ -166,19 +166,17 @@ public final class Parser {
     }
     else if(getCurrentToken() == INT) {
     	nextToken();
-    	if(getCurrentToken() == LBRACKET) {
+    	while(getCurrentToken() == LBRACKET) {
     		nextToken();
-        while(getCurrentToken() != RBRACKET){
-          nextToken();
     		  accept(RBRACKET);
       }
     	}
-    }
+    
     accept(IDENT);
     accept(LPAREN);
-    if(getCurrentToken() != RPAREN) {
+    //if(getCurrentToken() != RPAREN) {
     	parameterDeclList();
-    }
+    
     accept(RPAREN);
     compoundStmt();
     /* trying to accept a function title which mgiht be void or int will need to get the parameter */
@@ -358,16 +356,15 @@ public final class Parser {
     accept(OUT);
     accept(DOT);
 
-    switch (getCurrentToken()) {
-        if(getCurrentToken == print){
+            if(getCurrentToken() == print){
           accept(LPAREN);
-          PRINTARGUMENT();
+          printArgument();
           accept(RPAREN);
         }
-        else if(getCurrentToken == println){
+        else if(getCurrentToken() == println){
           accept(LPAREN);
           if(getCurrentToken != RPAREN){
-            PrintArgument();
+            printArgument();
           }
           accept(RPAREN);
         }
@@ -375,6 +372,8 @@ public final class Parser {
           throw new SourceFileErrorException("print() or println() expected, not "
                               + getCurrentToken().symbolRepresentationForOutputFile);
         }
+    switch (getCurrentToken()) {
+
 
       /* ????????
 
@@ -393,9 +392,13 @@ public final class Parser {
     TJ.output.printSymbol(NTprintArgument);
     TJ.output.incTreeDepth();
 
-    accept(CHARSTRING);
-    expr3();
-    /* ???????? */
+    if(getCurrentToken == CHARSTRING){
+      accept(CHARSTRING);
+    }
+    else{
+      expr3();
+    }
+      /* ???????? */
 
     TJ.output.decTreeDepth();
   }
