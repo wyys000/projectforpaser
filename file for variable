@@ -1,0 +1,112 @@
+// push stataddr
+package TJasn.virtualMachine;
+
+import static TJasn.virtualMachine.CodeInterpreter.*;
+import TJasn.TJ;
+
+public class PUSHSTATADDRinstr extends OneOperandInstruction {
+
+  void execute ()
+  {
+    /* ???????? */
+  }
+
+  public PUSHSTATADDRinstr (int offset)
+  {
+    super(offset, "PUSHSTATADDR");
+  }
+}
+
+//push laddr
+package TJasn.virtualMachine;
+
+import static TJasn.virtualMachine.CodeInterpreter.*;
+
+public class PUSHLOCADDRinstr extends OneOperandInstruction {
+
+  void execute ()
+  {
+     /* ???????? */
+  }
+
+
+  public PUSHLOCADDRinstr (int stackFrameOffset)
+  {
+    super(stackFrameOffset, "PUSHLOCADDR");
+  }
+}
+
+//variablerec
+package TJasn.symbolTable;
+
+import TJasn.TJ;
+
+abstract public class VariableRec extends TabRec {
+
+  public static final int UNUSED = -32768;
+
+  public static final int INT = 0, SCANNER = 1;
+
+  public final int offset;
+
+  public final int type;
+
+  public final int dimensionCount;
+
+  VariableRec (String idName, int varType, int dimensions, int varOffset)
+  {
+    super(idName, TJ.symTab);
+    type = varType;
+    dimensionCount = dimensions;
+    offset = varOffset;
+  }
+
+  VariableRec (String idName)
+  {
+    super(idName, TJ.symTab);
+    type = SCANNER;
+    dimensionCount = 0;
+    offset = UNUSED;
+  }
+}
+
+//local variablerec
+package TJasn.symbolTable;
+
+import TJasn.TJ;
+
+public final class LocalVariableRec extends VariableRec {
+
+  public LocalVariableRec(String idName, int varType, int dimensions, int stackframeOffset)
+  {
+    super(idName, varType, dimensions, stackframeOffset);
+  }
+
+  public LocalVariableRec(String idName)  // for a Scanner variable
+  {
+    super(idName);
+  }
+
+}
+
+//class variablerec
+package TJasn.symbolTable;
+
+import TJasn.TJ;
+
+public final class ClassVariableRec extends VariableRec {
+
+  public ClassVariableRec(String idName, int varType, int dimensions, int addr)
+  {
+    super(idName, varType, dimensions, addr);
+  }
+
+  public ClassVariableRec(String idName)  // for a Scanner variable
+  {
+    super(idName);
+  }
+}
+
+
+
+
